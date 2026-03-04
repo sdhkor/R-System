@@ -1,0 +1,32 @@
+{
+  "schema_version": "risk_state.v0.1",
+  "ts": "2026-03-04T09:05:00+09:00",
+  "market": {
+    "risk_level": 72,
+    "regime": "risk",
+    "commitment_score": 3,
+    "pressure_score": 4,
+    "amplifier_score": 2,
+    "crave_total": 9,
+    "evidence": ["USD/KRW spike", "KOSPI shock open"]
+  },
+  "account": {
+    "equity_krw": 10000000,
+    "cash_krw": 3000000,
+    "equity_day_start": 10200000,
+    "equity_peak": 10300000,
+    "day_pnl_pct": -1.9608,
+    "portfolio_dd_pct": -2.9126,
+    "positions_count": 7,
+    "gross_exposure_pct": 70.0,
+    "max_symbol_weight_pct": 18.0
+  },
+  "execution": {
+    "orders_last_60s": 3,
+    "orders_last_5m": 8,
+    "duplicate_hits_60s": 0,
+    "reject_count_60s": 0,
+    "exec_anomaly": false,
+    "anomaly_flags": []
+  }
+}

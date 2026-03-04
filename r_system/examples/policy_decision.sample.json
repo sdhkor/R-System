@@ -1,0 +1,29 @@
+﻿{
+  "schema_version": "policy_decision.v0.1",
+  "ts": "2026-03-04T17:16:24.630877",
+  "decision": "BLOCK",
+  "risk_regime": "RISK_OFF",
+  "controls": {
+    "entry_allowed": false,
+    "exit_allowed": true,
+    "reduce_only": true,
+    "max_positions": 5,
+    "max_total_exposure_pct": 30,
+    "max_symbol_weight_pct": 5,
+    "order_throttle": {
+      "max_orders_per_min": 10,
+      "min_seconds_between_orders": 6
+    },
+    "cooldown_minutes": 30
+  },
+  "reasons": [
+    "LOSS:computed_day_pnl_pct=-1.9608",
+    "LOSS:computed_dd_pct=-2.9126",
+    "LOSS:day_pnl_pct=-1.9608",
+    "LOSS:portfolio_dd_pct=-2.9126",
+    "MARKET:crave_total=9 => RISK_OFF => BLOCK(HQ fixed)"
+  ],
+  "meta": {
+    "policy_set_id": "R.v0.1"
+  }
+}

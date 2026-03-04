@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "risk_state.v0.1.schema.json",
+  "title": "risk_state.v0.1",
+  "type": "object",
+  "required": ["schema_version", "ts", "market", "account", "execution"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "risk_state.v0.1" },
+    "ts": { "type": "string" },
+
+    "market": {
+      "type": "object",
+      "required": ["risk_level", "regime", "commitment_score", "pressure_score", "amplifier_score", "crave_total"],
+      "properties": {
+        "risk_level": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "regime": { "type": "string", "enum": ["normal", "risk", "crisis"] },
+        "commitment_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "pressure_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "amplifier_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "crave_total": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "evidence": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "additionalProperties": true
+    },
+
+    "account": {
+      "type": "object",
+      "required": [
+        "equity_krw",
+        "cash_krw",
+        "equity_day_start",
+        "equity_peak",
+        "positions_count",
+        "gross_exposure_pct",
+        "max_symbol_weight_pct"
+      ],
+      "properties": {
+        "equity_krw": { "type": "number", "minimum": 0 },
+        "cash_krw": { "type": "number", "minimum": 0 },
+        "equity_day_start": { "type": "number", "minimum": 0 },
+        "equity_peak": { "type": "number", "minimum": 0 },
+        "day_pnl_pct": { "type": "number" },
+        "portfolio_dd_pct": { "type": "number" },
+        "positions_count": { "type": "integer", "minimum": 0 },
+        "gross_exposure_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "max_symbol_weight_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "additionalProperties": true
+    },
+
+    "execution": {
+      "type": "object",
+      "required": ["orders_last_60s", "orders_last_5m", "duplicate_hits_60s", "reject_count_60s", "exec_anomaly"],
+      "properties": {
+        "orders_last_60s": { "type": "integer", "minimum": 0 },
+        "orders_last_5m": { "type": "integer", "minimum": 0 },
+        "duplicate_hits_60s": { "type": "integer", "minimum": 0 },
+        "reject_count_60s": { "type": "integer", "minimum": 0 },
+        "exec_anomaly": { "type": "boolean" },
+        "anomaly_flags": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

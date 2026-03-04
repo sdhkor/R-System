@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "policy_decision.v0.1.schema.json",
+  "title": "policy_decision.v0.1",
+  "type": "object",
+  "required": ["schema_version", "ts", "decision", "risk_regime", "controls", "reasons", "meta"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "policy_decision.v0.1" },
+    "ts": { "type": "string" },
+
+    "decision": { "type": "string", "enum": ["ALLOW", "BLOCK", "LIQUIDATE_ONLY", "HALT"] },
+    "risk_regime": { "type": "string", "enum": ["NORMAL", "CAUTION", "RISK_OFF", "LIQUIDATE_ONLY", "HALT"] },
+
+    "controls": {
+      "type": "object",
+      "required": [
+        "entry_allowed",
+        "exit_allowed",
+        "reduce_only",
+        "max_positions",
+        "max_total_exposure_pct",
+        "max_symbol_weight_pct",
+        "order_throttle",
+        "cooldown_minutes"
+      ],
+      "properties": {
+        "entry_allowed": { "type": "boolean" },
+        "exit_allowed": { "type": "boolean" },
+        "reduce_only": { "type": "boolean" },
+        "max_positions": { "type": "integer", "minimum": 0 },
+        "max_total_exposure_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "max_symbol_weight_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "order_throttle": {
+          "type": "object",
+          "required": ["max_orders_per_min", "min_seconds_between_orders"],
+          "properties": {
+            "max_orders_per_min": { "type": "integer", "minimum": 0 },
+            "min_seconds_between_orders": { "type": "number", "minimum": 0 }
+          }
+        },
+        "cooldown_minutes": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+
+    "reasons": { "type": "array", "items": { "type": "string" } },
+
+    "meta": {
+      "type": "object",
+      "required": ["policy_set_id"],
+      "properties": { "policy_set_id": { "type": "string", "const": "R.v0.1" } },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

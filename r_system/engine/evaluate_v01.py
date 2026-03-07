@@ -1,8 +1,7 @@
 ﻿from __future__ import annotations
 
-from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 
 def _utc_ts() -> str:
@@ -16,14 +15,14 @@ def evaluate_v01(risk_state: Dict[str, Any], policy_set_id: str = "R.v0.1") -> D
     Input:  risk_state.v0.1 (dict)
     Output: policy_decision.v0.1 (dict)
 
-    NOTE:
-    - v0.1??紐⑹쟻? '?뺤콉 寃곗젙???대━???뺥깭/?명꽣?섏씠??瑜?怨좎젙?섎뒗 寃?
-    - ?섎?/?곗꽑?쒖쐞 蹂寃쎌? HQ ?뱀씤 ?꾩슂(needs:HqDecision).
+    NOTE
+    - v0.1 목적: '정책 결정 로직의 형태/인터페이스'를 고정하는 것
+    - 정책 '의미/우선순위' 변경은 HQ 승인 필요(needs:HqDecision).
     """
 
     reasons: List[str] = []
 
-    # --- tolerate multiple shapes (v0.1 珥덇린???좎뿰?섍쾶) ---
+    # --- tolerate multiple shapes (v0.1 초기에는 유연하게) ---
     market = risk_state.get("market", {}) if isinstance(risk_state.get("market", {}), dict) else {}
     loss = risk_state.get("loss", {}) if isinstance(risk_state.get("loss", {}), dict) else {}
     portfolio = risk_state.get("portfolio", {}) if isinstance(risk_state.get("portfolio", {}), dict) else {}
@@ -43,7 +42,7 @@ def evaluate_v01(risk_state: Dict[str, Any], policy_set_id: str = "R.v0.1") -> D
     decision = "ALLOW"
     risk_regime = "NORMAL"
 
-    # --- HQ-fixed example rule (as seen in sample output) ---
+    # --- HQ-fixed example rule (sample output 기준) ---
     try:
         if crave_total is not None and float(crave_total) >= 9:
             risk_regime = "RISK_OFF"
@@ -53,7 +52,9 @@ def evaluate_v01(risk_state: Dict[str, Any], policy_set_id: str = "R.v0.1") -> D
         reasons.append("WARN:crave_total parse failed")
 
     # --- minimal safe controls (v0.1 baseline) ---
-    # Allow: ?됰꼮 / Block: 異뺤냼+吏꾩엯湲덉? / Liquidate/Halt: 吏꾩엯湲덉?+異뺤냼(媛먯냼留?
+    # Allow: 진입 허용
+    # Block: 진입 차단 + 익절/손절 등 청산은 허용
+    # Liquidate/Halt(추후): 진입 차단 + reduce-only(감소/청산만) 방향
     controls = {
         "entry_allowed": decision == "ALLOW",
         "exit_allowed": True,

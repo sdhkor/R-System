@@ -1,6 +1,13 @@
+## Public SSOT
+https://github.com/sdhkor/AI-Quant-SSOT/blob/main/HQ_DASHBOARD.md
+
+운영 기준판은 위 Public SSOT를 따른다.  
+이 이슈에서는 private 작업물/증거만 관리한다.  
+Public SSOT에는 상태 요약과 포인터 번호만 반영한다.
+
 ## 📌 Start Here (SSOT)
 
-- 🧭 HQ Dashboard (SSOT, single source of truth): https://github.com/sdhkor/A-System/blob/main/docs/HQ_DASHBOARD.md
+
 - 📜 Constitution v1.1: `docs/CONSTITUTION.md`
 - 📘 Runbook v1.0: `docs/RUNBOOK.md`
 
